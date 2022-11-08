@@ -1,0 +1,14 @@
+---
+- name: Configure Central Router
+  hosts: inetRouter
+  become: true
+  tasks:
+    - name: Configure | Sysctl Forwarding
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        sysctl_set: yes
+        state: present
+        reload: yes
+    - name: Configure | Iptables
+      shell: iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE
