@@ -16,8 +16,8 @@ MACHINES = {
                    {ip: '192.168.0.1', adapter: 3, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"},
                    {ip: '192.168.0.33', adapter: 4, netmask: "255.255.255.240", virtualbox__intnet: "hw-net"},
                    {ip: '192.168.0.65', adapter: 5, netmask: "255.255.255.192", virtualbox__intnet: "mgt-net"},
-                   {ip: '192.168.254.2', adapter: 6, netmask: "255.255.255.252", virtualbox__intnet: "o1-net"},
-                   {ip: '192.168.253.2', adapter: 7, netmask: "255.255.255.252", virtualbox__intnet: "o2-net"},
+                   {ip: '192.168.254.1', adapter: 6, netmask: "255.255.255.252", virtualbox__intnet: "o1-net"},
+                   {ip: '192.168.253.1', adapter: 7, netmask: "255.255.255.252", virtualbox__intnet: "o2-net"},
                 ]
   },
   

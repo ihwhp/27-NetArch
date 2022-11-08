@@ -1,6 +1,6 @@
 ---
 - name: Configure Central Router
-  hosts: centralRouter
+  hosts: office2Router
   become: true
   tasks:
 
@@ -22,36 +22,22 @@
         reload: yes
 
     - name: Configure | Eth0
-      community.general.nmcli:
+      nmcli:
         conn_name: "System eth0"
         type: ethernet
         ifname: eth0
-        never_default4: yes
         state: present
 
     - name: Configure | Eth1
-      community.general.nmcli:
+      nmcli:
         conn_name: "System eth1"
         type: ethernet
         ifname: eth1
-        gw4: 192.168.255.1
+        gw4: 192.168.254.1
         state: present
 
-    - name: Configure | Eth5 to Office1
-      community.general.nmcli:
-        conn_name: "System eth5"
-        ifname: eth5
-        type: ethernet
-        routes4: '192.168.2.0/26 192.168.2.64.0/26 192.168.2.128/26 192.168.2.192/26'
-        state: present
-
-    - name: Configure | Eth6 to Office2
-      community.general.nmcli:
-        conn_name: "System eth6"
-        ifname: eth5
-        type: ethernet
-        routes4: '192.168.1.0/25 192.168.2.128/26 192.168.2.192/26'
-        state: present
+    - name: Configure | Eth0 NoDefRoute
+      shell: echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0
 
     - name: Restart network service for interface eth0
       service:
