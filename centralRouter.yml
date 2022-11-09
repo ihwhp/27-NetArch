@@ -48,7 +48,7 @@
     - name: Configure | Eth6 to Office2
       community.general.nmcli:
         conn_name: "System eth6"
-        ifname: eth5
+        ifname: eth6
         type: ethernet
         routes4: '192.168.1.0/25 192.168.253.2, 192.168.1.128/26 192.168.253.2, 192.168.1.192/26 192.168.253.2'
         state: present
