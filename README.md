@@ -255,3 +255,7 @@ Addresses in network    - 64
 Network range           - 192.168.0.64 - 192.168.0.127
 Usable range            - 192.168.0.65 - 192.168.0.126
 ```
+Тут свободны подсети: `192.168.0.16/28` `192.168.0.48/28` `192.168.0.128/25`
+
+### Карта сети  
+![Untitled Diagram drawio](https://user-images.githubusercontent.com/105001717/200868239-60854458-7376-4ba1-948f-3ade7d539f47.png)
