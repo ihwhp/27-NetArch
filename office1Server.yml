@@ -1,0 +1,36 @@
+---
+- name: Configure Central Router
+  hosts: office1Server
+  become: true
+  tasks:
+
+    - name: Install | Network manager libs
+      package:
+        name:
+          - NetworkManager-libnm
+          - nm-connection-editor
+          - libsemanage-python
+          - policycoreutils-python
+        state: present
+
+    - name: Configure | Eth0
+      community.general.nmcli:
+        conn_name: "System eth0"
+        type: ethernet
+        ifname: eth0
+        never_default4: yes
+        state: present
+
+    - name: Configure | Eth1
+      nmcli:
+        conn_name: "System eth1"
+        type: ethernet
+        ifname: eth1
+        ip4: 192.168.2.2/26
+        gw4: 192.168.2.1
+        state: present
+
+    - name: Restart network service
+      service:
+        name: network
+        state: restarted
