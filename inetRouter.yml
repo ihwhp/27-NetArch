@@ -10,5 +10,6 @@
         sysctl_set: yes
         state: present
         reload: yes
+
     - name: Configure | Iptables
       shell: iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE

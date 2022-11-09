@@ -61,7 +61,7 @@ MACHINES = {
   :office2Server => {
     :box_name => "centos/7",
     :net => [
-               {ip: '192.168.1.2', adapter: 2, netmask: "255.255.255.192", virtualbox__intnet: "dev-o2-net"}
+               {ip: '192.168.1.2', adapter: 2, netmask: "255.255.255.128", virtualbox__intnet: "dev-o2-net"}
             ]
   }
   
@@ -93,7 +93,7 @@ Vagrant.configure("2") do |config|
         when "inetRouter"
 		  box.vm.provision "ansible", run: "always", type: "ansible_local"  do |ansible|
 			ansible.become = true
-			ansible.playbook = "inetRouter.yml"
+                        ansible.playbook = "inetRouter.yml"
                   end
 #          box.vm.provision "shell", run: "always", inline: <<-SHELL
 #            sysctl net.ipv4.conf.all.forwarding=1
@@ -102,6 +102,9 @@ Vagrant.configure("2") do |config|
         when "centralRouter"
                    box.vm.provision "ansible", run: "always", type: "ansible_local"  do |ansible|
                          ansible.become = true
+                         ansible.galaxy_role_file = "requirements.yml"
+                         ansible.galaxy_roles_path = "/etc/ansible/collections"
+                         ansible.galaxy_command = "sudo ansible-galaxy collection install -r %{role_file} -p %{roles_path} --force" 
                          ansible.playbook = "centralRouter.yml"
                    end
 #          box.vm.provision "shell", run: "always", inline: <<-SHELL
@@ -113,6 +116,9 @@ Vagrant.configure("2") do |config|
         when "centralServer"
                    box.vm.provision "ansible", run: "always", type: "ansible_local"  do |ansible|
                          ansible.become = true
+                         ansible.galaxy_role_file = "requirements.yml"
+                         ansible.galaxy_roles_path = "/etc/ansible/collections"
+                         ansible.galaxy_command = "sudo ansible-galaxy collection install -r %{role_file} -p %{roles_path} --force"
                          ansible.playbook = "centralServer.yml"
                    end
 #          box.vm.provision "shell", run: "always", inline: <<-SHELL
@@ -120,6 +126,43 @@ Vagrant.configure("2") do |config|
 #            echo "GATEWAY=192.168.0.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
 #            systemctl restart network
 #            SHELL
+#===================Office1	
+			when "office1Router"
+		  box.vm.provision "ansible", run: "always", type: "ansible_local"  do |ansible|
+			ansible.become = true
+			ansible.galaxy_role_file = "requirements.yml"
+			ansible.galaxy_roles_path = "/etc/ansible/collections"
+			ansible.galaxy_command = "sudo ansible-galaxy collection install -r %{role_file} -p %{roles_path} --force"
+			ansible.playbook = "office1Router.yml"
+		  end
+
+			when "office1Server"
+		  box.vm.provision "ansible", run: "always", type: "ansible_local"  do |ansible|
+			ansible.become = true
+			ansible.galaxy_role_file = "requirements.yml"
+			ansible.galaxy_roles_path = "/etc/ansible/collections"
+			ansible.galaxy_command = "sudo ansible-galaxy collection install -r %{role_file} -p %{roles_path} --force"
+			ansible.playbook = "office1Server.yml"
+		  end
+			
+			
+#===================Office2			
+			when "office2Router"
+		  box.vm.provision "ansible", run: "always", type: "ansible_local"  do |ansible|
+			ansible.become = true
+			ansible.galaxy_role_file = "requirements.yml"
+			ansible.galaxy_roles_path = "/etc/ansible/collections"
+			ansible.galaxy_command = "sudo ansible-galaxy collection install -r %{role_file} -p %{roles_path} --force"
+			ansible.playbook = "office2Router.yml"
+		  end
+			when "office2Server"
+		  box.vm.provision "ansible", run: "always", type: "ansible_local"  do |ansible|
+			ansible.become = true
+			ansible.galaxy_role_file = "requirements.yml"
+			ansible.galaxy_roles_path = "/etc/ansible/collections"
+                        ansible.galaxy_command = "sudo ansible-galaxy collection install -r %{role_file} -p %{roles_path} --force"
+			ansible.playbook = "office2Server.yml"
+		  end
         end
 
       end
